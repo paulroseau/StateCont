@@ -22,7 +22,7 @@ newtype State s a = State { runState :: forall r. s -> (a -> s -> r) -> r }
 
  -- | Injects pure value inside a stateful computation
 inject :: a -> State s a
-inject = undefined
+inject a = State (\s -> ($s) . ($a))
 
 -- | Maps a given function throught a given state
 mapS :: (a -> b) -> State s a -> State s b
