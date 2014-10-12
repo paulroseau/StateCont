@@ -26,7 +26,8 @@ inject a = State (\s -> ($s) . ($a))
 
 -- | Maps a given function throught a given state
 mapS :: (a -> b) -> State s a -> State s b
-mapS = undefined
+mapS f st = State (\s -> let g = runState st $ s
+                         in \fb -> g $ (fb . f))
 
 -- | Chains stateful computations
 bind ::  State s a -> (a -> State s b) -> State s b
