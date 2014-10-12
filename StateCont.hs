@@ -74,7 +74,7 @@ instance Monad (State s) where
 -----------------------------------------------------------------------------
 
 -- | simple function that manipulates the State, just to show how we can use it
-useState ::State Int Int
+useState :: State Int Int
 useState = do
           s <- get
           let r = s*3 + 1
