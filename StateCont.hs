@@ -29,9 +29,15 @@ mapS :: (a -> b) -> State s a -> State s b
 mapS f st = State (\s -> let g = runState st $ s
                          in \fb -> g $ (fb . f))
 
+-- | Joins (helps to deduce bind)
+joinS :: State s (State s a) -> State s a
+joinS stst = State (\s -> let f = runState stst $ s
+                          in f $ g)
+             where g st s = runState st $ s
+
 -- | Chains stateful computations
 bind ::  State s a -> (a -> State s b) -> State s b
-bind =  undefined
+bind st f = joinS . (mapS f) $ st
 
 -- | Infix equivalent of bind
 infixr 1 >>>=
