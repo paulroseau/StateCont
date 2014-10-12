@@ -46,15 +46,15 @@ infixr 1 >>>=
 
 -- | Gets current state
 get :: State s s
-get = undefined
+get = State (\s -> ($s) . ($s)) 
 
 -- | Updates current state by the give value
 put :: s -> State s ()
-put = undefined
+put s = State (\_ -> ($s) . ($()))
 
 -- | Applies the given function to current State
 modify  :: (s -> s) -> State s ()
-modify = undefined
+modify f = State (\s -> ($(f s)) . ($()))
 
 -- | Extracts current state and discards the result
 execState :: s -> State s a -> s
