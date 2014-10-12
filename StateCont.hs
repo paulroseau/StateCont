@@ -58,11 +58,11 @@ modify f = State (\s -> ($(f s)) . ($()))
 
 -- | Extracts current state and discards the result
 execState :: s -> State s a -> s
-execState = undefined
+execState s st = (runState st $ s) $ (\a s -> s)
 
 -- | Extracts current result and discards the state
 evalState :: s -> State s a -> a
-evalState = undefined
+evalState s st = (runState st $ s) $ (\a s -> a)
 
 -- | making State s a an instance of Monad to make do notation available
 instance Monad (State s) where
