@@ -1,7 +1,7 @@
 {-# LANGUAGE RankNTypes #-}
 
 module StateCont (
-   -- | Injects pure value inside a statefull computation
+   -- | Injects pure value inside a stateful computation
    inject,
    -- | Chains stateful computations
    (>>>=),
@@ -20,44 +20,44 @@ where
 
 newtype State s a = State { runState :: forall r. s -> (a -> s -> r) -> r }
 
--- | inject pure value inside a statefull computation
+ -- | Injects pure value inside a stateful computation
 inject :: a -> State s a
 inject = undefined
 
--- | map a given function throught a given state
+-- | Maps a given function throught a given state
 mapS :: (a -> b) -> State s a -> State s b
 mapS = undefined
 
--- |Chain statfull computations
+-- | Chains stateful computations
 bind ::  State s a -> (a -> State s b) -> State s b
 bind =  undefined
 
--- | Infix operation equivalent of bind
+-- | Infix equivalent of bind
 infixr 1 >>>=
 (>>>=) :: State s a -> (a -> State s b) -> State s b
 (>>>=) = bind
 
--- | gets current state
+-- | Gets current state
 get :: State s s
 get = undefined
 
--- | updates current states by the give value
+-- | Updates current state by the give value
 put :: s -> State s ()
 put = undefined
 
--- | uplies the given function to current State
+-- | Applies the given function to current State
 modify  :: (s -> s) -> State s ()
 modify = undefined
 
--- | extract current State and discards the result
+-- | Extracts current state and discards the result
 execState :: s -> State s a -> s
 execState = undefined
 
--- | extracts current result and discards the State
+-- | Extracts current result and discards the state
 evalState :: s -> State s a -> a
 evalState = undefined
 
--- | making State s a an instance fo monad to make do notation availalbe
+-- | making State s a an instance of Monad to make do notation available
 instance Monad (State s) where
  return = inject
  (>>=) = (>>>=)
@@ -66,7 +66,7 @@ instance Monad (State s) where
 -- Test
 -----------------------------------------------------------------------------
 
--- | simple function that manipulate the State, just to show how we can use it
+-- | simple function that manipulates the State, just to show how we can use it
 useState ::State Int Int
 useState = do
           s <- get
